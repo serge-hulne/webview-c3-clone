@@ -12,3 +12,7 @@
 ### License
 
 This repo is released under the [MIT License]
+
+### Prerequisites
+- Clone the [webview](https://github.com/webview/webview) repsoitory.
+- Install the resulting library libwevview.a to your local libraries (e.g. /usr/local/lib)
