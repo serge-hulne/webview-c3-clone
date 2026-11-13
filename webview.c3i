@@ -58,9 +58,9 @@ struct WebView {
   void* webview;
 }
 
-def DispatchCallback = fn void(WebView w, void* arg);
+alias DispatchCallback = fn void(WebView w, void* arg);
 
-def BindCallback = fn void(char* seq, char* req, void* arg);
+alias BindCallback = fn void(char* seq, char* req, void* arg);
 
 // Creates a new webview instance. If debug is non-zero - developer tools will
 // be enabled (if the platform supports them). The window parameter can be a
@@ -70,66 +70,66 @@ def BindCallback = fn void(char* seq, char* req, void* arg);
 // passed here. Returns null on failure. Creation can fail for various reasons
 // such as when required runtime dependencies are missing or when window creation
 // fails.
-fn WebView create(int debug, void *window = null) @extern("webview_create");
+fn WebView create(int debug, void *window = null) @cname("webview_create");
 
 // Destroys a webview and closes the native window.
-fn void WebView.destroy(WebView w) @extern("webview_destroy");
+fn void WebView.destroy(WebView w) @cname("webview_destroy");
 
 // Runs the main loop until it's terminated. After this function exits - you
 // must destroy the webview.
-fn void WebView.run(WebView w) @extern("webview_run");
+fn void WebView.run(WebView w) @cname("webview_run");
 
 // Stops the main loop. It is safe to call this function from another other
 // background thread.
-fn void WebView.terminate(WebView w) @extern("webview_terminate");
+fn void WebView.terminate(WebView w) @cname("webview_terminate");
 
 // Posts a function to be executed on the main thread. You normally do not need
 // to call this function, unless you want to tweak the native window.
-fn void WebView.dispatch(WebView w, DispatchCallback f, void *arg) @extern("webview_dispatch");
+fn void WebView.dispatch(WebView w, DispatchCallback f, void *arg) @cname("webview_dispatch");
 
 // Returns a native window handle pointer. When using a GTK backend the pointer
 // is a GtkWindow pointer, when using a Cocoa backend the pointer is a NSWindow
 // pointer, when using a Win32 backend the pointer is a HWND pointer.
-fn void* WebView.getWindow(WebView w) @extern("webview_get_window");
+fn void* WebView.getWindow(WebView w) @cname("webview_get_window");
 
 // Updates the title of the native window. Must be called from the UI thread.
-fn void WebView.setTitle(WebView w, char *title) @extern("webview_set_title");
+fn void WebView.setTitle(WebView w, char *title) @cname("webview_set_title");
 
 // Updates the size of the native window.
-fn void WebView.setSize(WebView w, int width, int height, WindowSizeHint hints) @extern("webview_set_size");
+fn void WebView.setSize(WebView w, int width, int height, WindowSizeHint hints) @cname("webview_set_size");
 
 // Navigates webview to the given URL. URL may be a properly encoded data URI.
-fn void WebView.navigate(WebView w, char *url) @extern("webview_navigate");
+fn void WebView.navigate(WebView w, char *url) @cname("webview_navigate");
 
 // Set webview HTML directly.
-fn void WebView.setHtml(WebView w, char *html) @extern("webview_set_html");
+fn void WebView.setHtml(WebView w, char *html) @cname("webview_set_html");
 
 // Injects JavaScript code at the initialization of the new page. Every time
 // the webview will open a new page - this initialization code will be
 // executed. It is guaranteed that code is executed before window.onload.
-fn void WebView.init(WebView w, char *js) @extern("webview_init");
+fn void WebView.init(WebView w, char *js) @cname("webview_init");
 
 // Evaluates arbitrary JavaScript code. Evaluation happens asynchronously, also
 // the result of the expression is ignored. Use RPC bindings if you want to
 // receive notifications about the results of the evaluation.
-fn void WebView.eval(WebView w, char *js) @extern("webview_eval");
+fn void WebView.eval(WebView w, char *js) @cname("webview_eval");
 
 // Binds a native C callback so that it will appear under the given name as a
 // global JavaScript function. Internally it uses webview_init(). The callback
 // receives a sequential request id, a request string and a user-provided
 // argument pointer. The request string is a JSON array of all the arguments
 // passed to the JavaScript function.
-fn void WebView.bind(WebView w, char *name, BindCallback f, void *arg) @extern("webview_bind");
+fn void WebView.bind(WebView w, char *name, BindCallback f, void *arg) @cname("webview_bind");
 
 // Removes a native C callback that was previously set by webview_bind.
-fn void WebView.unbind(WebView w, char *name) @extern("webview_unbind");
+fn void WebView.unbind(WebView w, char *name) @cname("webview_unbind");
 
 // Responds to a binding call from the JS side. The ID/sequence number must
 // match the value passed to the binding handler in order to respond to the
 // call and complete the promise on the JS side. A status of zero resolves
 // the promise, and any other value rejects it. The result must either be a
 // valid JSON value or an empty string for the primitive JS value "undefined".
-fn void WebView.ret(WebView w, char* seq, int status, char* result) @extern("webview_return");
+fn void WebView.ret(WebView w, char* seq, int status, char* result) @cname("webview_return");
 
 // Get the library's version information.
-fn WebviewVersionInfo* version() @extern("webview_version");
+fn WebviewVersionInfo* version() @cname("webview_version");
