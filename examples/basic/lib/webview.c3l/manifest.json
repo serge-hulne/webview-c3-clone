@@ -1,0 +1,20 @@
+{
+  "provides" : "webview",
+  "targets" : {
+    "linux-x64" : {
+      "link-args" : [],
+      "dependencies" : [],
+      "linked-libraries" : ["webview"]
+    },
+    "macos-aarch64" : {
+      "link-args" : ["-L/usr/local/lib"], 
+      "dependencies" : [],
+      "linked-libraries" : ["webview", "c++", "WebKit.framework"]
+    },
+    "macos-x64" : {
+      "link-args" : ["-L/usr/local/lib"], 
+      "dependencies" : [],
+      "linked-libraries" : ["webview", "c++", "WebKit.framework"]
+    }
+  }
+}

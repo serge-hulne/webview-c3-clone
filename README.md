@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/34803822/README.md)
 # webview-c3 (forked)
 
 - This a fork of https://github.com/thechampagne/webview-c3 updated for C3 v. 0.8.6 (Linux and Mac OS)
